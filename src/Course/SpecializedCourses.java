@@ -53,6 +53,31 @@ public class SpecializedCourses extends Course{
         Course.courses.add(thermodynamics);
     }
 
+    public static void showCourseInformation(Course a){
+        System.out.print("department: " + a.department + "   code: " + a.code + "   teacher:" + a.teacher +
+                "   title: " +a.title + "    capacity: " + a.capacity + "    credit: " + a.credit +
+                "    exam date: " + a.examDate + "    class time: ");
+        if (a.classTime[0] == 1){
+            System.out.print("saturday");
+        }
+        else if (a.classTime[0] == 2){
+            System.out.print("sunday");
+        }
+        else if (a.classTime[0] == 3){
+            System.out.print("monday");
+        }
+        else if (a.classTime[0] == 4){
+            System.out.print("tuesday");
+        }
+        else if (a.classTime[0] == 5){
+            System.out.print("wednesday");
+        }
+        else{
+
+        }
+        System.out.print(": " + a.classTime[1] + "-" + a.classTime[2]);
+    }
+
     static SpecializedCourses algebra = new SpecializedCourses(CourseType.specializedCourse, CourseDepartment.mathematicalScience, "22217",
             "ebraihimi", "algebra", 40, 4, new int[]{2, 10, 12}, "1403/03/31",
             new ArrayList<Student>());

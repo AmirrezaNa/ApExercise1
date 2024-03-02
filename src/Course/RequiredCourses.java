@@ -21,12 +21,6 @@ public class RequiredCourses extends Course{
         this.credit = credit;
         this.classTime = classTime;
         this.examDate = examDate;
-        Course.courses.add(calculus1);
-        Course.courses.add(physics1);
-        Course.courses.add(computerArchitect);
-        Course.courses.add(electronic);
-        Course.courses.add(chemistry1);
-        Course.courses.add(mechanic);
     }
     public static void addCourse(){
         Course.courses.add(calculus1);
