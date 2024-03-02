@@ -8,7 +8,7 @@ import java.util.List;
 public class Student extends User{
     public String studentNumber;
     public List<Course> studentCourses;
-    int studentCredit;
+    public int studentCredit;
     static List<String> studentNumbers = new ArrayList<>();
 
     public static List<Student> students = new ArrayList<>();
