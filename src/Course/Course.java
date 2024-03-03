@@ -222,4 +222,120 @@ public class Course {
             }
         }
     }
+    public static void creatingCourse() {
+        System.out.println("1.special   2.required");
+        int type1 = scanner.nextInt();
+        System.out.println("department:   1.mathematical   2.physics  3.computerEngineering   4.electricalEngineering" +
+                "    5.chemistry    6.mechanicalEngineering");
+
+        int department1 = scanner.nextInt();
+        String empty = scanner.nextLine();
+        System.out.println("code:");
+        String code1 = scanner.nextLine();
+        System.out.println("teacher:");
+        String teacher1 = scanner.nextLine();
+        System.out.println("title:");
+        String title1 = scanner.nextLine();
+        System.out.println("capacity:");
+        int capacity1 = scanner.nextInt();
+        System.out.println("credit:");
+        int credit1 = scanner.nextInt();
+        System.out.println("class day:   1.saturday  2.sunday  3.monday   4.tuesday  5.wednesday");
+        int classDay1 = scanner.nextInt();
+        System.out.println("starting hour:");
+        int startingHour1 = scanner.nextInt();
+        System.out.println("finishingHour:");
+        int finishingHour1 = scanner.nextInt();
+        int[] classTime1 = {classDay1, startingHour1, finishingHour1};
+        System.out.println("exam date:");
+        String examDate1 = scanner.nextLine();
+        List<Student> courseStudents1 = new ArrayList<>();
+        int members = 0;
+        if (type1 == 1) {
+            if (department1 == 1) {
+                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                        CourseDepartment.mathematicalScience, code1, teacher1, title1, capacity1,
+                        credit1, classTime1, examDate1, courseStudents1, members);
+                Course.courses.add(courses1);
+            } else if (department1 == 2) {
+                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                        CourseDepartment.physics, code1, teacher1, title1, capacity1,
+                        credit1, classTime1, examDate1, courseStudents1, members);
+                Course.courses.add(courses1);
+            } else if (department1 == 3) {
+                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                        CourseDepartment.computerEngineering, code1, teacher1, title1, capacity1,
+                        credit1, classTime1, examDate1, courseStudents1, members);
+                Course.courses.add(courses1);
+            } else if (department1 == 4) {
+                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                        CourseDepartment.electricalEngineering, code1, teacher1, title1, capacity1,
+                        credit1, classTime1, examDate1, courseStudents1, members);
+                Course.courses.add(courses1);
+            } else if (department1 == 5) {
+                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                        CourseDepartment.chemistry, code1, teacher1, title1, capacity1,
+                        credit1, classTime1, examDate1, courseStudents1, members);
+                Course.courses.add(courses1);
+            } else if (department1 == 6) {
+                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                        CourseDepartment.mechanicalEngineering, code1, teacher1, title1, capacity1,
+                        credit1, classTime1, examDate1, courseStudents1, members);
+                Course.courses.add(courses1);
+            }
+        }
+
+
+    }
+    public static void removingStudent() {
+        System.out.println("enter the code of your course:");
+        String courseCode = scanner.nextLine();
+        for (Course course : courses) {
+            if (course.code.equals(courseCode)) {
+                for (Student student : course.students) {
+                    System.out.println(student.studentNumber);
+                }
+                System.out.println("enter the code of your student:");
+                String studentCode = scanner.nextLine();
+                for (Student student : Student.students) {
+                    if (student.studentNumber.equals(studentCode)) {
+                        if (course.students.contains(student)) {
+                            course.students.remove(student);
+                            student.studentCourses.remove(course);
+                            student.studentCredit -= course.credit;
+                            course.members--;
+                            System.out.println("student removed successfully.");
+                        } else {
+                            System.out.println("this student doesn't have this course.");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void addingStudent() {
+        System.out.println("enter the code of your course:");
+        String courseCode = scanner.nextLine();
+        for (Course course : courses) {
+            if (course.code.equals(courseCode)) {
+                System.out.println("enter the code of your student:");
+                String studentCode = scanner.nextLine();
+                for (Student student : Student.students) {
+                    if (student.studentNumber.equals(studentCode)) {
+                        if ((student.studentCredit + course.credit <= 20) && (course.members < course.capacity)) {
+                            student.studentCourses.add(course);
+                            student.studentCredit += course.credit;
+                            course.members++;
+                            course.students.add(student);
+                        } else if (student.studentCredit + course.credit > 20) {
+                            System.out.println("you can't take more than 20 credit!");
+                        } else if (course.members >= course.capacity) {
+                            System.out.println("this course has no capacity!");
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
