@@ -1,5 +1,6 @@
 package Course;
 
+import EnteringTheProgram.EnterPage;
 import User.Student;
 
 import java.util.ArrayList;
@@ -43,8 +44,8 @@ public class Course {
     public static void showCourses() {
         System.out.println("choose department: 1.mathematical science   2.physics   3.computer engineering" +
                 "   4.electrical engineering    5.chemistry   6.mechanic engineering");
-        int chooseDepartment = scanner.nextInt();
-        if (chooseDepartment == 1) {
+        String chooseDepartment = EnterPage.scanner.nextLine();
+        if (chooseDepartment.equals("1")) {
             for (Course a : courses) {
                 if (a.department.equals(CourseDepartment.mathematicalScience)) {
                     if (a.type.equals(CourseType.requiredCourse)) {
@@ -55,7 +56,7 @@ public class Course {
                     System.out.println();
                 }
             }
-        } else if (chooseDepartment == 2) {
+        } else if (chooseDepartment.equals("2")) {
             for (Course a : courses) {
                 if (a.department.equals(CourseDepartment.physics)) {
                     if (a.type.equals(CourseType.requiredCourse)) {
@@ -66,7 +67,7 @@ public class Course {
                     System.out.println();
                 }
             }
-        } else if (chooseDepartment == 3) {
+        } else if (chooseDepartment.equals("3")) {
             for (Course a : courses) {
                 if (a.department.equals(CourseDepartment.computerEngineering)) {
                     if (a.type.equals(CourseType.requiredCourse)) {
@@ -78,7 +79,7 @@ public class Course {
                 }
 
             }
-        } else if (chooseDepartment == 4) {
+        } else if (chooseDepartment.equals("4")) {
             for (Course a : courses) {
                 if (a.department.equals(CourseDepartment.electricalEngineering)) {
                     if (a.type.equals(CourseType.requiredCourse)) {
@@ -90,7 +91,7 @@ public class Course {
                 }
 
             }
-        } else if (chooseDepartment == 5) {
+        } else if (chooseDepartment.equals("5")) {
             for (Course a : courses) {
                 if (a.department.equals(CourseDepartment.chemistry)) {
                     if (a.type.equals(CourseType.requiredCourse)) {
@@ -102,7 +103,7 @@ public class Course {
                 }
 
             }
-        } else if (chooseDepartment == 6) {
+        } else if (chooseDepartment.equals("6")) {
             for (Course a : courses) {
                 if (a.department.equals(CourseDepartment.mechanicalEngineering)) {
                     if (a.type.equals(CourseType.requiredCourse)) {
@@ -115,7 +116,6 @@ public class Course {
 
             }
         }
-        String empty = scanner.nextLine();
     }
 
 
