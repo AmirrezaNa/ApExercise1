@@ -1,5 +1,6 @@
 package EnteringTheProgram;
 
+import User.Admin;
 import User.Student;
 
 import java.util.Scanner;
@@ -11,8 +12,7 @@ public class EnterPage {
         String userTypeChoice = EnterPage.scanner.nextLine();
         switch (userTypeChoice) {
             case "1" -> Student.studentType();
-            case "2" -> {
-            }
+            case "2" -> Admin.enterAdmin();
             case "3" -> System.exit(0);
         }
 

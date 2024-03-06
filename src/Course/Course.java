@@ -1,6 +1,7 @@
 package Course;
 
 import EnteringTheProgram.EnterPage;
+import User.Admin;
 import User.Student;
 
 import java.util.ArrayList;
@@ -225,30 +226,26 @@ public class Course {
         System.out.println("1.keep adding course      2.back(deleting the course you just added)     " +
                 "3.back to start     4.end program");
         String keepAddingCourse = EnterPage.scanner.nextLine();
-        if (keepAddingCourse.equals("1")){
-            if (studentType.equals("s")){
-                Student.studentSignupChoice(student);
+        switch (keepAddingCourse) {
+            case "1" -> {
+                if (studentType.equals("s")) {
+                    Student.studentSignupChoice(student);
+                } else if (studentType.equals("l")) {
+                    Student.studentLoginChoice(student);
+                }
             }
-            else if (studentType.equals("l")){
-                Student.studentLoginChoice(student);
+            case "2" -> {
+                student.studentCredit -= course.credit;
+                course.members--;
+                course.students.remove(student);
+                student.studentCourses.remove(course);
             }
-
-        }
-        else if (keepAddingCourse.equals("2")){
-            student.studentCredit -= course.credit;
-            course.members--;
-            course.students.remove(student);
-            student.studentCourses.remove(course);
-        }
-        else if (keepAddingCourse.equals("3")){
-            EnterPage.userType();
-        }
-        else if (keepAddingCourse.equals("4")){
-            System.exit(0);
-        }
-        else {
-            System.out.println("try again!");
-            Course.choiceAfterAddingCourse(student, course, studentType);
+            case "3" -> EnterPage.userType();
+            case "4" -> System.exit(0);
+            default -> {
+                System.out.println("try again!");
+                Course.choiceAfterAddingCourse(student, course, studentType);
+            }
         }
     }
 
@@ -278,119 +275,258 @@ public class Course {
 
     public static void creatingCourse() {
         System.out.println("1.special   2.required");
-        int type1 = scanner.nextInt();
+        String  type1 = scanner.nextLine();
         System.out.println("department:   1.mathematical   2.physics  3.computerEngineering   4.electricalEngineering" +
                 "    5.chemistry    6.mechanicalEngineering");
 
-        int department1 = scanner.nextInt();
-        String empty = scanner.nextLine();
-        System.out.println("code:");
-        String code1 = scanner.nextLine();
-        System.out.println("teacher:");
-        String teacher1 = scanner.nextLine();
-        System.out.println("title:");
-        String title1 = scanner.nextLine();
-        System.out.println("capacity:");
-        int capacity1 = scanner.nextInt();
-        System.out.println("credit:");
-        int credit1 = scanner.nextInt();
-        System.out.println("class day:   1.saturday  2.sunday  3.monday   4.tuesday  5.wednesday");
-        int classDay1 = scanner.nextInt();
-        System.out.println("starting hour:");
-        int startingHour1 = scanner.nextInt();
-        System.out.println("finishingHour:");
-        int finishingHour1 = scanner.nextInt();
-        int[] classTime1 = {classDay1, startingHour1, finishingHour1};
-        System.out.println("exam date:");
-        String examDate1 = scanner.nextLine();
-        List<Student> courseStudents1 = new ArrayList<>();
-        int members = 0;
-        if (type1 == 1) {
-            if (department1 == 1) {
-                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
-                        CourseDepartment.mathematicalScience, code1, teacher1, title1, capacity1,
-                        credit1, classTime1, examDate1, courseStudents1, members);
-                Course.courses.add(courses1);
-            } else if (department1 == 2) {
-                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
-                        CourseDepartment.physics, code1, teacher1, title1, capacity1,
-                        credit1, classTime1, examDate1, courseStudents1, members);
-                Course.courses.add(courses1);
-            } else if (department1 == 3) {
-                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
-                        CourseDepartment.computerEngineering, code1, teacher1, title1, capacity1,
-                        credit1, classTime1, examDate1, courseStudents1, members);
-                Course.courses.add(courses1);
-            } else if (department1 == 4) {
-                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
-                        CourseDepartment.electricalEngineering, code1, teacher1, title1, capacity1,
-                        credit1, classTime1, examDate1, courseStudents1, members);
-                Course.courses.add(courses1);
-            } else if (department1 == 5) {
-                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
-                        CourseDepartment.chemistry, code1, teacher1, title1, capacity1,
-                        credit1, classTime1, examDate1, courseStudents1, members);
-                Course.courses.add(courses1);
-            } else if (department1 == 6) {
-                SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
-                        CourseDepartment.mechanicalEngineering, code1, teacher1, title1, capacity1,
-                        credit1, classTime1, examDate1, courseStudents1, members);
-                Course.courses.add(courses1);
+        String  department1 = scanner.nextLine();
+        if (!department1.equals("1") && !department1.equals("2") && !department1.equals("3") &&
+                !department1.equals("4") && !department1.equals("5") && !department1.equals("6")){
+            System.out.println("please a number choose 1-6 :");
+            Course.creatingCourse();
+        }
+        else {
+            System.out.println("code:");
+            String code1 = scanner.nextLine();
+            System.out.println("teacher:");
+            String teacher1 = scanner.nextLine();
+            System.out.println("title:");
+            String title1 = scanner.nextLine();
+            System.out.println("capacity:");
+            int capacity1 = scanner.nextInt();
+            System.out.println("credit:");
+            int credit1 = scanner.nextInt();
+            System.out.println("class day:   1.saturday  2.sunday  3.monday   4.tuesday  5.wednesday");
+            int classDay1 = scanner.nextInt();
+            System.out.println("starting hour:");
+            int startingHour1 = scanner.nextInt();
+            System.out.println("finishing hour:");
+            int finishingHour1 = scanner.nextInt();
+            int[] classTime1 = {classDay1, startingHour1, finishingHour1};
+            System.out.println("exam date:");
+            String examDate1 = scanner.nextLine();
+            List<Student> courseStudents1 = new ArrayList<>();
+            int members = 0;
+            if (type1.equals("1")) {
+                switch (department1) {
+                    case "1" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                                CourseDepartment.mathematicalScience, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "2" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                                CourseDepartment.physics, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "3" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                                CourseDepartment.computerEngineering, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "4" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                                CourseDepartment.electricalEngineering, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "5" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                                CourseDepartment.chemistry, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "6" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.specializedCourse,
+                                CourseDepartment.mechanicalEngineering, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                }
+            }
+            else if (type1.equals("2")) {
+                switch (department1) {
+                    case "1" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.requiredCourse,
+                                CourseDepartment.mathematicalScience, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "2" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.requiredCourse,
+                                CourseDepartment.physics, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "3" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.requiredCourse,
+                                CourseDepartment.computerEngineering, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "4" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.requiredCourse,
+                                CourseDepartment.electricalEngineering, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "5" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.requiredCourse,
+                                CourseDepartment.chemistry, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                    case "6" -> {
+                        SpecializedCourses courses1 = new SpecializedCourses(CourseType.requiredCourse,
+                                CourseDepartment.mechanicalEngineering, code1, teacher1, title1, capacity1,
+                                credit1, classTime1, examDate1, courseStudents1, members);
+                        Course.courses.add(courses1);
+                    }
+                }
+            }
+            else {
+                System.out.println("try again.");
+                Course.creatingCourse();
             }
         }
 
 
+
     }
 
-    public static void removingStudent() {
-        System.out.println("enter the code of your course:");
-        String courseCode = scanner.nextLine();
-        for (Course course : courses) {
-            if (course.code.equals(courseCode)) {
-                for (Student student : course.students) {
-                    System.out.println(student.studentNumber);
+    public static void removingCourse(){
+        System.out.println("1.course's code:      2.back       3.back to start      4.end program");
+        String removeCourse = EnterPage.scanner.nextLine();
+        switch (removeCourse){
+            case "2" -> Admin.enterAdmin();
+            case "3" -> EnterPage.userType();
+            case "4" -> System.exit(0);
+            default -> {
+                if (Course.courses.contains(removeCourse)){
+                    Course.courses.remove(removeCourse);
+                    Course.adminChoiceAfterCourse("remove");
                 }
-                System.out.println("enter the code of your student:");
-                String studentCode = scanner.nextLine();
-                for (Student student : Student.students) {
-                    if (student.studentNumber.equals(studentCode)) {
-                        if (course.students.contains(student)) {
+                else {
+                    System.out.println("this course doesn't exist!");
+                    System.out.println("try again.");
+                    Course.removingCourse();
+                }
+            }
+        }
+
+    }
+
+
+    public static void adminChoiceAfterCourse(String action){
+        System.out.println("1.continue       2.back      3.back to start      4.end program");
+        String choice = EnterPage.scanner.nextLine();
+        switch (choice){
+            case "1" ->{
+                switch (action){
+                    case "remove" -> Course.removingCourse();
+                    case "create" -> Course.creatingCourse();
+                }
+            }
+
+        }
+    }
+
+    public static void removingStudent(Course course) {
+        System.out.println("enter the code of your student:");
+        String studentCode = scanner.nextLine();
+        for (Student student : Student.students) {
+            if (student.studentNumber.equals(studentCode)) {
+                if (course.students.contains(student)) {
+                    course.students.remove(student);
+                    student.studentCourses.remove(course);
+                    student.studentCredit -= course.credit;
+                    course.members--;
+                    System.out.println("student removed successfully.");
+                } else {
+                    System.out.println("this student doesn't have this course.");
+                }
+            }
+        }
+    }
+
+    public static void addingStudent(Course course, String courseCode) {
+        System.out.println("1.enter the code of your student:     2.back      3.back to start   4.end program");
+        String studentCode = EnterPage.scanner.nextLine();
+        switch (studentCode){
+            case "2" -> Course.showingCourseStudents(courseCode);
+        }
+        for (Student student : Student.students) {
+            if (student.studentNumber.equals(studentCode)) {
+                if ((student.studentCredit + course.credit <= 20) && (course.members < course.capacity)) {
+                    student.studentCourses.add(course);
+                    student.studentCredit += course.credit;
+                    course.members++;
+                    course.students.add(student);
+                    System.out.println("student added successfully!");
+                    System.out.println("1.keep adding students     2.back(removing the student you just added)");
+                    System.out.println("3.back to start     4.end program");
+                    String adminChoice = EnterPage.scanner.nextLine();
+                    switch (adminChoice){
+                        case "1" -> Course.addingStudent(course, courseCode);
+                        case "2" -> {
                             course.students.remove(student);
                             student.studentCourses.remove(course);
                             student.studentCredit -= course.credit;
                             course.members--;
-                            System.out.println("student removed successfully.");
-                        } else {
-                            System.out.println("this student doesn't have this course.");
+                            Course.addingStudent(course, courseCode);
                         }
+                        case "3" -> EnterPage.userType();
+                        case "4" -> System.exit(0);
                     }
+                } else if (student.studentCredit + course.credit > 20) {
+                    System.out.println("you can't take more than 20 credit!");
+                } else if (course.members >= course.capacity) {
+                    System.out.println("this course has no capacity!");
                 }
+            }
+            else {
+                System.out.println("there is no such a student!");
+                System.out.println("try again.");
+                Course.addingStudent(course, courseCode);
             }
         }
     }
 
-    public static void addingStudent() {
-        System.out.println("enter the code of your course:");
-        String courseCode = scanner.nextLine();
-        for (Course course : courses) {
-            if (course.code.equals(courseCode)) {
-                System.out.println("enter the code of your student:");
-                String studentCode = scanner.nextLine();
-                for (Student student : Student.students) {
-                    if (student.studentNumber.equals(studentCode)) {
-                        if ((student.studentCredit + course.credit <= 20) && (course.members < course.capacity)) {
-                            student.studentCourses.add(course);
-                            student.studentCredit += course.credit;
-                            course.members++;
-                            course.students.add(student);
-                        } else if (student.studentCredit + course.credit > 20) {
-                            System.out.println("you can't take more than 20 credit!");
-                        } else if (course.members >= course.capacity) {
-                            System.out.println("this course has no capacity!");
+    public static void showingCourseStudents(String courseCode){
+        boolean courseExistence = true;
+        for (Course course: Course.courses){
+            if (course.code.equals(courseCode)){
+                courseExistence = false;
+                if (course.students.isEmpty()){
+                    System.out.println("no students for this course.");
+                }
+                else {
+                    for (Student student: course.students){
+                        System.out.println(student.studentNumber);
+                        System.out.println();
+                    }
+                    System.out.println("1.adding student       2.removing student      3.back");
+                    System.out.println("4.back to start      5.end program");
+                    String choice = EnterPage.scanner.nextLine();
+                    switch (choice){
+                        case "1" -> Course.addingStudent(course, courseCode);
+                        case "2" -> Course.removingStudent(course);
+                        case "3" -> {
+                            Admin.adminCheckingStudents();
                         }
+                        case "4" -> EnterPage.userType();
+                        case "5" -> System.exit(0);
                     }
                 }
             }
+        }
+        if (courseExistence){
+            System.out.println("there is no such a course!");
+            System.out.println("try again!");
+            Admin.adminCheckingStudents();
         }
     }
 }
