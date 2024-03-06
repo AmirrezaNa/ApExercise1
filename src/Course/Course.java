@@ -33,9 +33,9 @@ public class Course {
     String title;
     int capacity;
     int credit;
-    int[] classTime = new int[3];
+    int[] classTime;
     String examDate;
-    List<Student> students = new ArrayList<>();
+    List<Student> students;
     public static List<Course> courses = new ArrayList<>();
     int members = 0;
 
@@ -129,97 +129,94 @@ public class Course {
     public static void addCourseForStudent(Student student, String studentType) {
         System.out.println("1.course's code:       2.back     3.back to start     4.end program");
         String courseCode = scanner.nextLine();
-        if (courseCode.equals("2")) {
-            if (studentType.equals("s")){
-                Student.studentSignupChoice(student);
+        switch (courseCode) {
+            case "2" -> {
+                if (studentType.equals("s")) {
+                    Student.studentSignupChoice(student);
+                } else if (studentType.equals("l")) {
+                    Student.studentLoginChoice(student);
+                }
             }
-            else if (studentType.equals("l")){
-                Student.studentLoginChoice(student);
-            }
-
-        } else if (courseCode.equals("3")) {
-            EnterPage.userType();
-        } else if (courseCode.equals("4")) {
-            System.exit(0);
-        } else {
-            boolean courseExistence = true;
-            while (courseExistence) {
-                for (Course course : Course.courses) {
-                    if (course.code.equals(courseCode)) {
-                        courseExistence = false;
-                        boolean havingCourseAlready = true;
-                        if (student.studentCourses.contains(course)) {
-                            havingCourseAlready = false;
-                            System.out.println("you already have this course!");
-                            System.out.println("try again.");
-                            Course.addCourseForStudent(student, studentType);
-                        } else if (student.studentCourses.isEmpty()) {
-                            student.studentCredit += course.credit;
-                            course.members++;
-                            student.studentCourses.add(course);
-                            System.out.println("course added successfully.");
-                        } else {
-                            boolean havingAnotherClass = true;
-                            boolean havingAnotherExam = true;
-                            boolean checkStudentCredit = true;
-                            for (Course course1 : student.studentCourses) {
-                                if (course1.classTime[0] == course.classTime[0]) {
-                                    if ((course.classTime[1] < course1.classTime[1] &&
-                                            course.classTime[2] > course1.classTime[1]) ||
-                                            (course1.classTime[1] < course.classTime[1] &&
-                                                    course1.classTime[2] > course.classTime[1])) {
-                                        havingAnotherClass = false;
-                                    }
-                                }
-                                if (course.examDate.equals(course1.examDate)) {
-                                    havingAnotherExam = false;
-                                }
-                                if (student.studentCredit + course.credit > 20) {
-                                    checkStudentCredit = false;
-                                }
-                            }
-                            if (havingAnotherClass == false) {
-                                System.out.println("you have a another class at this time.");
-                            } else if (havingAnotherExam == false) {
-                                System.out.println("you have a another exam at this time.");
-                            } else if (checkStudentCredit == false) {
-                                System.out.println("you can't take more than 20 credit.");
-                            } else if (havingAnotherClass == true && havingAnotherExam == true &&
-                                    checkStudentCredit == true) {
+            case "3" -> EnterPage.userType();
+            case "4" -> System.exit(0);
+            default -> {
+                boolean courseExistence = true;
+                while (courseExistence) {
+                    for (Course course : Course.courses) {
+                        if (course.code.equals(courseCode)) {
+                            courseExistence = false;
+                            boolean havingCourseAlready = true;
+                            if (student.studentCourses.contains(course)) {
+                                havingCourseAlready = false;
+                                System.out.println("you already have this course!");
+                                System.out.println("try again.");
+                                Course.addCourseForStudent(student, studentType);
+                            } else if (student.studentCourses.isEmpty()) {
                                 student.studentCredit += course.credit;
                                 course.members++;
-                                course.students.add(student);
                                 student.studentCourses.add(course);
                                 System.out.println("course added successfully.");
-                                Course.choiceAfterAddingCourse(student, course, studentType);
+                            } else {
+                                boolean havingAnotherClass = true;
+                                boolean havingAnotherExam = true;
+                                boolean checkStudentCredit = true;
+                                for (Course course1 : student.studentCourses) {
+                                    if (course1.classTime[0] == course.classTime[0]) {
+                                        if ((course.classTime[1] < course1.classTime[1] &&
+                                                course.classTime[2] > course1.classTime[1]) ||
+                                                (course1.classTime[1] < course.classTime[1] &&
+                                                        course1.classTime[2] > course.classTime[1])) {
+                                            havingAnotherClass = false;
+                                        }
+                                    }
+                                    if (course.examDate.equals(course1.examDate)) {
+                                        havingAnotherExam = false;
+                                    }
+                                    if (student.studentCredit + course.credit > 20) {
+                                        checkStudentCredit = false;
+                                    }
+                                }
+                                if (!havingAnotherClass) {
+                                    System.out.println("you have a another class at this time.");
+                                } else if (!havingAnotherExam) {
+                                    System.out.println("you have a another exam at this time.");
+                                } else if (!checkStudentCredit) {
+                                    System.out.println("you can't take more than 20 credit.");
+                                } else {
+                                    student.studentCredit += course.credit;
+                                    course.members++;
+                                    course.students.add(student);
+                                    student.studentCourses.add(course);
+                                    System.out.println("course added successfully.");
+                                    Course.choiceAfterAddingCourse(student, course, studentType);
+                                }
                             }
-                        }
 
+                        }
+                    }
+                    if (courseExistence) {
+                        System.out.println("there's no such a course!");
+                        System.out.println("try again.");
+                        Course.addCourseForStudent(student, studentType);
                     }
                 }
-                if (courseExistence == true) {
-                    System.out.println("there's no such a course!");
-                    System.out.println("try again.");
-                    Course.addCourseForStudent(student, studentType);
+
+                boolean b = true;
+                while (b) {
+                    System.out.println("1.keep adding courses    2.done");
+                    int a = scanner.nextInt();
+                    if (a == 1) {
+                        b = false;
+                        String empty = scanner.nextLine();
+                        Course.addCourseForStudent(student, studentType);
+                    }
+                    if (a == 2) {
+                        b = false;
+                    } else if (a > 2) {
+                        System.out.println("try again!");
+                    }
                 }
             }
-
-            boolean b = true;
-            while (b) {
-                System.out.println("1.keep adding courses    2.done");
-                int a = scanner.nextInt();
-                if (a == 1) {
-                    b = false;
-                    String empty = scanner.nextLine();
-                    Course.addCourseForStudent(student, studentType);
-                }
-                if (a == 2) {
-                    b = false;
-                } else if (a > 2) {
-                    System.out.println("try again!");
-                }
-            }
-
         }
     }
 
@@ -258,11 +255,11 @@ public class Course {
     public static void removeCourseForStudent(Student student) {
         System.out.println("write your course's code:");
         String courseCode = scanner.nextLine();
-        boolean c = true;
-        while (c) {
+        boolean courseExistence = true;
+        while (courseExistence) {
             for (Course course : Course.courses) {
                 if (course.code.equals(courseCode)) {
-                    c = false;
+                    courseExistence = false;
                     if (student.studentCourses.contains(course)) {
                         student.studentCourses.remove(course);
                         student.studentCredit -= course.credit;
@@ -272,7 +269,7 @@ public class Course {
                     }
                 }
             }
-            if (c = true) {
+            if (!courseExistence) {
                 System.out.println("you don't have this course.");
                 System.out.println("try again.");
             }

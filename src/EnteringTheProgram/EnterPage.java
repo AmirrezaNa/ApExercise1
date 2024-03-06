@@ -9,14 +9,11 @@ public class EnterPage {
     public static void userType(){
         System.out.println("1.student     2.admin    3.end Program");
         String userTypeChoice = EnterPage.scanner.nextLine();
-        if (userTypeChoice.equals("1")){
-            Student.studentType();
-        }
-        else if (userTypeChoice.equals("2")){
-
-        }
-        else if (userTypeChoice.equals("3")){
-            System.exit(0);
+        switch (userTypeChoice) {
+            case "1" -> Student.studentType();
+            case "2" -> {
+            }
+            case "3" -> System.exit(0);
         }
 
     }

@@ -61,12 +61,10 @@ public class Student extends User {
         System.out.println("1.enter student number (3 digits):         2.back       3.back to start      4.end program");
         try {
             String newStudentID = EnterPage.scanner.nextLine();
-            if (newStudentID.equals("2")) {
-                Student.studentType();
-            } else if (newStudentID.equals("3")) {
-                EnterPage.userType();
-            } else if (newStudentID.equals("4")) {
-                System.exit(0);
+            switch (newStudentID) {
+                case "2" -> Student.studentType();
+                case "3" -> EnterPage.userType();
+                case "4" -> System.exit(0);
             }
             if (isNumeric(newStudentID)) {
                 if (newStudentID.length() == 3) {
@@ -112,34 +110,32 @@ public class Student extends User {
                 "that you just created!)");
         System.out.println("3.back to start      4.end program");
         String StudentChoice = EnterPage.scanner.nextLine();
-        if (StudentChoice.equals("1")) {
-            Course.showCourses();
-            while (true) {
-                System.out.println("1.adding course     2.back        3.back to start       4.end program");
-                String choice = EnterPage.scanner.nextLine();
-                if (choice.equals("1")) {
-                    Course.addCourseForStudent(student, "s");
-                } else if (choice.equals("2")) {
-                    Student.studentSignupChoice(student);
-                } else if (choice.equals("3")) {
-                    EnterPage.userType();
-                } else if (choice.equals("4")) {
-                    System.exit(0);
-                } else {
-                    System.out.println("try again!");
+        switch (StudentChoice) {
+            case "1" -> {
+                Course.showCourses();
+                while (true) {
+                    System.out.println("1.adding course     2.back        3.back to start       4.end program");
+                    String choice = EnterPage.scanner.nextLine();
+                    switch (choice) {
+                        case "1" -> Course.addCourseForStudent(student, "s");
+                        case "2" -> Student.studentSignupChoice(student);
+                        case "3" -> EnterPage.userType();
+                        case "4" -> System.exit(0);
+                        default -> System.out.println("try again!");
+                    }
                 }
             }
-        } else if (StudentChoice.equals("2")) {
-            Student.students.remove(student);
-            Student.studentNumbers.remove(student.studentNumber);
-            Student.studentSignup();
-        } else if (StudentChoice.equals("3")) {
-            EnterPage.userType();
-        } else if (StudentChoice.equals("4")) {
-            System.exit(0);
-        } else {
-            System.out.println("try again.");
-            Student.studentSignupChoice(student);
+            case "2" -> {
+                Student.students.remove(student);
+                Student.studentNumbers.remove(student.studentNumber);
+                Student.studentSignup();
+            }
+            case "3" -> EnterPage.userType();
+            case "4" -> System.exit(0);
+            default -> {
+                System.out.println("try again.");
+                Student.studentSignupChoice(student);
+            }
         }
     }
 
@@ -159,38 +155,32 @@ public class Student extends User {
     public static void studentLogin() {
         System.out.println("1.student number:        2.back      3.back to start      4.end program");
         String studentNumber1 = EnterPage.scanner.nextLine();
-        if (studentNumber1.equals("2")){
-            Student.studentType();
-        }
-        else if (studentNumber1.equals("3")){
-            EnterPage.userType();
-        }
-        else if (studentNumber1.equals("4")){
-            System.exit(0);
-        }
-        else {
-            if (Student.studentNumbers.contains(studentNumber1)){
-                while (true){
-                    System.out.println("password:");
-                    String studentPass1 = EnterPage.scanner.nextLine();
-                    for (Student student: Student.students){
-                        if (student.studentNumber.equals(studentNumber1)){
-                            if (student.studentPass.equals(studentPass1)){
-                                Student.studentLoginChoice(student);
-                            }
-                            else {
-                                System.out.println("wrong password!");
-                                System.out.println("try again.");
+        switch (studentNumber1) {
+            case "2" -> Student.studentType();
+            case "3" -> EnterPage.userType();
+            case "4" -> System.exit(0);
+            default -> {
+                if (Student.studentNumbers.contains(studentNumber1)) {
+                    while (true) {
+                        System.out.println("password:");
+                        String studentPass1 = EnterPage.scanner.nextLine();
+                        for (Student student : Student.students) {
+                            if (student.studentNumber.equals(studentNumber1)) {
+                                if (student.studentPass.equals(studentPass1)) {
+                                    Student.studentLoginChoice(student);
+                                } else {
+                                    System.out.println("wrong password!");
+                                    System.out.println("try again.");
+                                }
                             }
                         }
                     }
-                }
 
-            }
-            else {
-                System.out.println("student number doesn't exist!");
-                System.out.println("try again");
-                Student.studentLogin();
+                } else {
+                    System.out.println("student number doesn't exist!");
+                    System.out.println("try again");
+                    Student.studentLogin();
+                }
             }
         }
 
@@ -198,32 +188,28 @@ public class Student extends User {
     public static void studentLoginChoice(Student student) {
         System.out.println("1.seeing courses       2.back        3.back to start      4.end program");
         String StudentChoice = EnterPage.scanner.nextLine();
-        if (StudentChoice.equals("1")) {
-            Course.showCourses();
-            while (true) {
-                System.out.println("1.adding course     2.back        3.back to start       4.end program");
-                String choice = EnterPage.scanner.nextLine();
-                if (choice.equals("1")) {
-                    Course.addCourseForStudent(student, "l");
-                } else if (choice.equals("2")) {
-                    Student.studentLoginChoice(student);
-                } else if (choice.equals("3")) {
-                    EnterPage.userType();
-                } else if (choice.equals("4")) {
-                    System.exit(0);
-                } else {
-                    System.out.println("try again!");
+        switch (StudentChoice) {
+            case "1" -> {
+                Course.showCourses();
+                while (true) {
+                    System.out.println("1.adding course     2.back        3.back to start       4.end program");
+                    String choice = EnterPage.scanner.nextLine();
+                    switch (choice) {
+                        case "1" -> Course.addCourseForStudent(student, "l");
+                        case "2" -> Student.studentLoginChoice(student);
+                        case "3" -> EnterPage.userType();
+                        case "4" -> System.exit(0);
+                        default -> System.out.println("try again!");
+                    }
                 }
             }
-        } else if (StudentChoice.equals("2")) {
-            Student.studentLogin();
-        } else if (StudentChoice.equals("3")) {
-            EnterPage.userType();
-        } else if (StudentChoice.equals("4")) {
-            System.exit(0);
-        } else {
-            System.out.println("try again.");
-            Student.studentLoginChoice(student);
+            case "2" -> Student.studentLogin();
+            case "3" -> EnterPage.userType();
+            case "4" -> System.exit(0);
+            default -> {
+                System.out.println("try again.");
+                Student.studentLoginChoice(student);
+            }
         }
     }
 }
