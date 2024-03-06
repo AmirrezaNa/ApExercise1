@@ -45,81 +45,217 @@ public class Course {
         System.out.println("choose department: 1.mathematical science   2.physics   3.computer engineering" +
                 "   4.electrical engineering    5.chemistry   6.mechanic engineering");
         String chooseDepartment = EnterPage.scanner.nextLine();
-        if (chooseDepartment.equals("1")) {
-            for (Course a : courses) {
-                if (a.department.equals(CourseDepartment.mathematicalScience)) {
-                    if (a.type.equals(CourseType.requiredCourse)) {
-                        RequiredCourses.showCourseInformation(a);
-                    } else {
-                        SpecializedCourses.showCourseInformation(a);
+        switch (chooseDepartment) {
+            case "1" -> {
+                for (Course a : courses) {
+                    if (a.department.equals(CourseDepartment.mathematicalScience)) {
+                        if (a.type.equals(CourseType.requiredCourse)) {
+                            RequiredCourses.showCourseInformation(a);
+                        } else {
+                            SpecializedCourses.showCourseInformation(a);
+                        }
+                        System.out.println();
                     }
-                    System.out.println();
                 }
             }
-        } else if (chooseDepartment.equals("2")) {
-            for (Course a : courses) {
-                if (a.department.equals(CourseDepartment.physics)) {
-                    if (a.type.equals(CourseType.requiredCourse)) {
-                        RequiredCourses.showCourseInformation(a);
-                    } else {
-                        SpecializedCourses.showCourseInformation(a);
+            case "2" -> {
+                for (Course a : courses) {
+                    if (a.department.equals(CourseDepartment.physics)) {
+                        if (a.type.equals(CourseType.requiredCourse)) {
+                            RequiredCourses.showCourseInformation(a);
+                        } else {
+                            SpecializedCourses.showCourseInformation(a);
+                        }
+                        System.out.println();
                     }
-                    System.out.println();
                 }
             }
-        } else if (chooseDepartment.equals("3")) {
-            for (Course a : courses) {
-                if (a.department.equals(CourseDepartment.computerEngineering)) {
-                    if (a.type.equals(CourseType.requiredCourse)) {
-                        RequiredCourses.showCourseInformation(a);
-                    } else {
-                        SpecializedCourses.showCourseInformation(a);
+            case "3" -> {
+                for (Course a : courses) {
+                    if (a.department.equals(CourseDepartment.computerEngineering)) {
+                        if (a.type.equals(CourseType.requiredCourse)) {
+                            RequiredCourses.showCourseInformation(a);
+                        } else {
+                            SpecializedCourses.showCourseInformation(a);
+                        }
+                        System.out.println();
                     }
-                    System.out.println();
-                }
 
-            }
-        } else if (chooseDepartment.equals("4")) {
-            for (Course a : courses) {
-                if (a.department.equals(CourseDepartment.electricalEngineering)) {
-                    if (a.type.equals(CourseType.requiredCourse)) {
-                        RequiredCourses.showCourseInformation(a);
-                    } else {
-                        SpecializedCourses.showCourseInformation(a);
-                    }
-                    System.out.println();
                 }
-
             }
-        } else if (chooseDepartment.equals("5")) {
-            for (Course a : courses) {
-                if (a.department.equals(CourseDepartment.chemistry)) {
-                    if (a.type.equals(CourseType.requiredCourse)) {
-                        RequiredCourses.showCourseInformation(a);
-                    } else {
-                        SpecializedCourses.showCourseInformation(a);
+            case "4" -> {
+                for (Course a : courses) {
+                    if (a.department.equals(CourseDepartment.electricalEngineering)) {
+                        if (a.type.equals(CourseType.requiredCourse)) {
+                            RequiredCourses.showCourseInformation(a);
+                        } else {
+                            SpecializedCourses.showCourseInformation(a);
+                        }
+                        System.out.println();
                     }
-                    System.out.println();
-                }
 
+                }
             }
-        } else if (chooseDepartment.equals("6")) {
-            for (Course a : courses) {
-                if (a.department.equals(CourseDepartment.mechanicalEngineering)) {
-                    if (a.type.equals(CourseType.requiredCourse)) {
-                        RequiredCourses.showCourseInformation(a);
-                    } else {
-                        SpecializedCourses.showCourseInformation(a);
+            case "5" -> {
+                for (Course a : courses) {
+                    if (a.department.equals(CourseDepartment.chemistry)) {
+                        if (a.type.equals(CourseType.requiredCourse)) {
+                            RequiredCourses.showCourseInformation(a);
+                        } else {
+                            SpecializedCourses.showCourseInformation(a);
+                        }
+                        System.out.println();
                     }
-                    System.out.println();
-                }
 
+                }
+            }
+            case "6" -> {
+                for (Course a : courses) {
+                    if (a.department.equals(CourseDepartment.mechanicalEngineering)) {
+                        if (a.type.equals(CourseType.requiredCourse)) {
+                            RequiredCourses.showCourseInformation(a);
+                        } else {
+                            SpecializedCourses.showCourseInformation(a);
+                        }
+                        System.out.println();
+                    }
+
+                }
             }
         }
     }
 
 
-    public static void addCourseForStudent(Student student) {
+    public static void addCourseForStudent(Student student, String studentType) {
+        System.out.println("1.course's code:       2.back     3.back to start     4.end program");
+        String courseCode = scanner.nextLine();
+        if (courseCode.equals("2")) {
+            if (studentType.equals("s")){
+                Student.studentSignupChoice(student);
+            }
+            else if (studentType.equals("l")){
+                Student.studentLoginChoice(student);
+            }
+
+        } else if (courseCode.equals("3")) {
+            EnterPage.userType();
+        } else if (courseCode.equals("4")) {
+            System.exit(0);
+        } else {
+            boolean courseExistence = true;
+            while (courseExistence) {
+                for (Course course : Course.courses) {
+                    if (course.code.equals(courseCode)) {
+                        courseExistence = false;
+                        boolean havingCourseAlready = true;
+                        if (student.studentCourses.contains(course)) {
+                            havingCourseAlready = false;
+                            System.out.println("you already have this course!");
+                            System.out.println("try again.");
+                            Course.addCourseForStudent(student, studentType);
+                        } else if (student.studentCourses.isEmpty()) {
+                            student.studentCredit += course.credit;
+                            course.members++;
+                            student.studentCourses.add(course);
+                            System.out.println("course added successfully.");
+                        } else {
+                            boolean havingAnotherClass = true;
+                            boolean havingAnotherExam = true;
+                            boolean checkStudentCredit = true;
+                            for (Course course1 : student.studentCourses) {
+                                if (course1.classTime[0] == course.classTime[0]) {
+                                    if ((course.classTime[1] < course1.classTime[1] &&
+                                            course.classTime[2] > course1.classTime[1]) ||
+                                            (course1.classTime[1] < course.classTime[1] &&
+                                                    course1.classTime[2] > course.classTime[1])) {
+                                        havingAnotherClass = false;
+                                    }
+                                }
+                                if (course.examDate.equals(course1.examDate)) {
+                                    havingAnotherExam = false;
+                                }
+                                if (student.studentCredit + course.credit > 20) {
+                                    checkStudentCredit = false;
+                                }
+                            }
+                            if (havingAnotherClass == false) {
+                                System.out.println("you have a another class at this time.");
+                            } else if (havingAnotherExam == false) {
+                                System.out.println("you have a another exam at this time.");
+                            } else if (checkStudentCredit == false) {
+                                System.out.println("you can't take more than 20 credit.");
+                            } else if (havingAnotherClass == true && havingAnotherExam == true &&
+                                    checkStudentCredit == true) {
+                                student.studentCredit += course.credit;
+                                course.members++;
+                                course.students.add(student);
+                                student.studentCourses.add(course);
+                                System.out.println("course added successfully.");
+                                Course.choiceAfterAddingCourse(student, course, studentType);
+                            }
+                        }
+
+                    }
+                }
+                if (courseExistence == true) {
+                    System.out.println("there's no such a course!");
+                    System.out.println("try again.");
+                    Course.addCourseForStudent(student, studentType);
+                }
+            }
+
+            boolean b = true;
+            while (b) {
+                System.out.println("1.keep adding courses    2.done");
+                int a = scanner.nextInt();
+                if (a == 1) {
+                    b = false;
+                    String empty = scanner.nextLine();
+                    Course.addCourseForStudent(student, studentType);
+                }
+                if (a == 2) {
+                    b = false;
+                } else if (a > 2) {
+                    System.out.println("try again!");
+                }
+            }
+
+        }
+    }
+
+
+    public static void choiceAfterAddingCourse(Student student, Course course, String studentType){
+        System.out.println("1.keep adding course      2.back(deleting the course you just added)     " +
+                "3.back to start     4.end program");
+        String keepAddingCourse = EnterPage.scanner.nextLine();
+        if (keepAddingCourse.equals("1")){
+            if (studentType.equals("s")){
+                Student.studentSignupChoice(student);
+            }
+            else if (studentType.equals("l")){
+                Student.studentLoginChoice(student);
+            }
+
+        }
+        else if (keepAddingCourse.equals("2")){
+            student.studentCredit -= course.credit;
+            course.members--;
+            course.students.remove(student);
+            student.studentCourses.remove(course);
+        }
+        else if (keepAddingCourse.equals("3")){
+            EnterPage.userType();
+        }
+        else if (keepAddingCourse.equals("4")){
+            System.exit(0);
+        }
+        else {
+            System.out.println("try again!");
+            Course.choiceAfterAddingCourse(student, course, studentType);
+        }
+    }
+
+    public static void removeCourseForStudent(Student student) {
         System.out.println("write your course's code:");
         String courseCode = scanner.nextLine();
         boolean c = true;
@@ -127,87 +263,7 @@ public class Course {
             for (Course course : Course.courses) {
                 if (course.code.equals(courseCode)) {
                     c = false;
-                    boolean a = true;
                     if (student.studentCourses.contains(course)) {
-                        System.out.println("you already have this course!");
-                    } else if (student.studentCourses.isEmpty()) {
-                        student.studentCredit += course.credit;
-                        course.members++;
-                        student.studentCourses.add(course);
-                        System.out.println("course added successfully.");
-                    } else {
-                        boolean d = true;
-                        boolean e = true;
-                        boolean f = true;
-                        for (Course course1 : student.studentCourses) {
-                            if (course1.classTime[0] == course.classTime[0]) {
-                                if ((course.classTime[1] < course1.classTime[1] &&
-                                        course.classTime[2] > course1.classTime[1]) ||
-                                        (course1.classTime[1] < course.classTime[1] &&
-                                                course1.classTime[2] > course.classTime[1])) {
-                                    d = false;
-                                }
-                            }
-                            if (course.examDate.equals(course1.examDate)) {
-                                e = false;
-                            }
-                            if (student.studentCredit + course.credit > 20) {
-                                f = false;
-                            }
-                        }
-                        if (d == false){
-                            System.out.println("you have a another class at this time.");
-                        }
-                        else if (e == false){
-                            System.out.println("you have a another exam at this time.");
-                        }
-                        else if (f == false){
-                            System.out.println("you can't take more than 20 credit.");
-                        }
-                        else if (d == true && e == true && f == true) {
-                            student.studentCredit += course.credit;
-                            course.members++;
-                            student.studentCourses.add(course);
-                            System.out.println("course added successfully.");
-                        }
-                    }
-
-                }
-            }
-            if (c == true) {
-                System.out.println("there's no such a course!");
-                System.out.println("try again.");
-                Course.addCourseForStudent(student);
-            }
-        }
-
-        boolean b = true;
-        while (b) {
-            System.out.println("1.keep adding courses    2.done");
-            int a = scanner.nextInt();
-            if (a == 1) {
-                b = false;
-                String empty = scanner.nextLine();
-                Course.addCourseForStudent(student);
-            }
-            if (a == 2) {
-                b = false;
-            } else if (a > 2) {
-                System.out.println("try again!");
-            }
-        }
-
-    }
-
-    public static void removeCourseForStudent(Student student){
-        System.out.println("write your course's code:");
-        String courseCode = scanner.nextLine();
-        boolean c = true;
-        while (c){
-            for (Course course: Course.courses){
-                if (course.code.equals(courseCode)){
-                    c = false;
-                    if (student.studentCourses.contains(course)){
                         student.studentCourses.remove(course);
                         student.studentCredit -= course.credit;
                         course.members--;
@@ -216,12 +272,13 @@ public class Course {
                     }
                 }
             }
-            if (c = true){
+            if (c = true) {
                 System.out.println("you don't have this course.");
                 System.out.println("try again.");
             }
         }
     }
+
     public static void creatingCourse() {
         System.out.println("1.special   2.required");
         int type1 = scanner.nextInt();
@@ -287,6 +344,7 @@ public class Course {
 
 
     }
+
     public static void removingStudent() {
         System.out.println("enter the code of your course:");
         String courseCode = scanner.nextLine();
