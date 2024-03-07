@@ -85,7 +85,7 @@ public class Student extends User {
                     }
                 }
             } else {
-                System.out.println("A 5 digits number!!!");
+                System.out.println("A 3 digits number!!!");
                 Student.studentSignup();
             }
         }
@@ -105,7 +105,10 @@ public class Student extends User {
                     System.out.println("1.adding course     2.back        3.back to start       4.end program");
                     String choice = EnterPage.scanner.nextLine();
                     switch (choice) {
-                        case "1" -> Course.addCourseForStudent(student, "s");
+                        case "1" -> {
+                            Course.addCourseForStudent(student, "s");
+                            Student.studentLoginChoice(student);
+                        }
                         case "2" -> Student.studentSignupChoice(student);
                         case "3" -> EnterPage.userType();
                         case "4" -> System.exit(0);
@@ -204,16 +207,30 @@ public class Student extends User {
     }
 
     public static void showStudentCourses(Student student){
-        for (Course course: student.studentCourses){
-            if (course.type.equals(CourseType.requiredCourse)){
-                RequiredCourses.showCourseInformation(course);
-            }
-            else if (course.type.equals(CourseType.specializedCourse)){
-                SpecializedCourses.showCourseInformation(course);
-            }
+        if (student.studentCourses.isEmpty()){
+            System.out.println("there is no course.");
+            Student.studentLoginChoice(student);
         }
+        else {
+            for (Course course: student.studentCourses){
+                if (course.type.equals(CourseType.requiredCourse)){
+                    RequiredCourses.showCourseInformation(course);
+                    System.out.println();
+                }
+                else if (course.type.equals(CourseType.specializedCourse)){
+                    SpecializedCourses.showCourseInformation(course);
+                    System.out.println();
+                }
+            }
+            Student.studentChoice(student);
+        }
+
+        
+    }
+    public static void studentChoice(Student student){
         while (true){
-            System.out.println("1.removing a course      3.back      4.back to start       5.end program");
+            System.out.println();
+            System.out.println("1.removing a course      2.back      3.back to start       4.end program");
             String studentCourses = EnterPage.scanner.nextLine();
             switch (studentCourses){
                 case "1" -> Course.removeCourseForStudent(student);
@@ -225,7 +242,5 @@ public class Student extends User {
                 }
             }
         }
-
-        
     }
 }

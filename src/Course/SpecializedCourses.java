@@ -72,9 +72,6 @@ public class SpecializedCourses extends Course{
         else if (a.classTime[0] == 5){
             System.out.print("wednesday");
         }
-        else{
-
-        }
         System.out.print(": " + a.classTime[1] + "-" + a.classTime[2]);
     }
 

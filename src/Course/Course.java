@@ -156,6 +156,7 @@ public class Course {
                                 student.studentCredit += course.credit;
                                 course.members++;
                                 student.studentCourses.add(course);
+                                course.students.add(student);
                                 System.out.println("course added successfully.");
                             } else {
                                 boolean havingAnotherClass = true;
@@ -251,7 +252,7 @@ public class Course {
 
     public static void removeCourseForStudent(Student student) {
         System.out.println("write your course's code:");
-        String courseCode = scanner.nextLine();
+        String courseCode = EnterPage.scanner.nextLine();
         boolean courseExistence = true;
         while (courseExistence) {
             for (Course course : Course.courses) {
@@ -266,7 +267,7 @@ public class Course {
                     }
                 }
             }
-            if (!courseExistence) {
+            if (courseExistence) {
                 System.out.println("you don't have this course.");
                 System.out.println("try again.");
             }
@@ -405,12 +406,16 @@ public class Course {
             case "3" -> EnterPage.userType();
             case "4" -> System.exit(0);
             default -> {
-                if (Course.courses.contains(removeCourse)){
-                    Course.courses.remove(removeCourse);
-                    Course.adminChoiceAfterCourse("remove");
+                boolean courseExistence = true;
+                for (Course course: Course.courses){
+                    if (course.code.equals(removeCourse)){
+                        courseExistence = false;
+                        Course.courses.remove(course);
+                        Course.adminChoiceAfterCourse("remove");
+                    }
                 }
-                else {
-                    System.out.println("this course doesn't exist!");
+                if (courseExistence){
+                    System.out.println("there's no such a course!");
                     System.out.println("try again.");
                     Course.removingCourse();
                 }
@@ -430,13 +435,19 @@ public class Course {
                     case "create" -> Course.creatingCourse();
                 }
             }
-
+            case "2" -> Admin.seeingCourses();
+            case "3" -> EnterPage.userType();
+            case "4" -> System.exit(0);
+            default -> {
+                System.out.println("try again");
+                Course.adminChoiceAfterCourse(action);
+            }
         }
     }
 
     public static void removingStudent(Course course) {
         System.out.println("enter the code of your student:");
-        String studentCode = scanner.nextLine();
+        String studentCode = EnterPage.scanner.nextLine();
         for (Student student : Student.students) {
             if (student.studentNumber.equals(studentCode)) {
                 if (course.students.contains(student)) {
@@ -514,9 +525,7 @@ public class Course {
                     switch (choice){
                         case "1" -> Course.addingStudent(course, courseCode);
                         case "2" -> Course.removingStudent(course);
-                        case "3" -> {
-                            Admin.adminCheckingStudents();
-                        }
+                        case "3" -> Admin.adminCheckingStudents();
                         case "4" -> EnterPage.userType();
                         case "5" -> System.exit(0);
                     }

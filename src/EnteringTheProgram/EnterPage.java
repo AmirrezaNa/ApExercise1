@@ -12,7 +12,7 @@ public class EnterPage {
         String userTypeChoice = EnterPage.scanner.nextLine();
         switch (userTypeChoice) {
             case "1" -> Student.studentType();
-            case "2" -> Admin.enterAdmin();
+            case "2" -> Admin.adminCheck();
             case "3" -> System.exit(0);
         }
 
